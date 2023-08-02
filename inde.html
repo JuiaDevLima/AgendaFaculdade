@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Agenda da Faculdade</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+
+        h1 {
+            color: #007bff;
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, button {
+            margin-bottom: 10px;
+            padding: 5px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #listaMaterias {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        #faltas {
+            margin-top: 40px;
+        }
+
+        #faltas h2 {
+            color: #007bff;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Agenda da Faculdade</h1>
+    <div class="container">
+        <form id="agendaForm">
+            <label for="materia">Matéria:</label>
+            <input type="text" id="materia" required>
+
+            <label for="horario">Horário:</label>
+            <input type="text" id="horario" required>
+
+            <button type="button" onclick="adicionarMateria()">Adicionar</button>
+        </form>
+
+        <div id="listaMaterias">
+            <!-- As matérias adicionadas serão exibidas aqui -->
+        </div>
+
+        <div id="faltas">
+            <h2>Limite de Faltas</h2>
+            <p id="faltasRestantes">0</p>
+        </div>
+    </div>
+
+    <script>
+        let faltasRestantes = 0;
+
+        function adicionarMateria() {
+            const materia = document.getElementById("materia").value;
+            const horario = document.getElementById("horario").value;
+            
+            if (materia !== "" && horario !== "") {
+                const listaMaterias = document.getElementById("listaMaterias");
+                const materiaItem = document.createElement("div");
+                materiaItem.classList.add("materia-item");
+                materiaItem.innerHTML = `<strong>${materia}</strong> - ${horario}`;
+                listaMaterias.appendChild(materiaItem);
+                
+                document.getElementById("materia").value = "";
+                document.getElementById("horario").value = "";
+                
+                atualizarFaltas();
+            }
+        }
+
+        function atualizarFaltas() {
+            const totalMaterias = document.getElementsByClassName("materia-item").length;
+            faltasRestantes = Math.ceil(totalMaterias * 0.1);
+            document.getElementById("faltasRestantes").innerText = faltasRestantes;
+        }
+    </script>
+</body>
+</html>
